@@ -35,6 +35,31 @@ export const Student = () => {
     socket.emit('sendIncrement', 1)
   }
 
+  // Test code - delete later
+  function sendOne() {
+    socket.emit('sendOne', 1)
+  }
+
+  function sendTwo() {
+    socket.emit('sendTwo', 1)
+  }
+
+  function sendThree() {
+    socket.emit('sendThree', 1)
+  }
+  
+  function sendFour() {
+    socket.emit('sendFour', 1)
+  }
+
+  function sendFive() {
+    socket.emit('sendFive', 1)
+  }
+
+  function sendSix() {
+    socket.emit('sendSix', 1)
+  }
+
   function randomDice() {
     const random = Math.floor(Math.random() * 10);
 
@@ -105,6 +130,14 @@ export const Student = () => {
 
       <p>State: {'' + isConnected}</p>
       <button onClick={sendIncrement}>Send increment</button>
+      {/* Test code - delete later */}
+      <button onClick={sendOne}>Send one</button>
+      <button onClick={sendTwo}>Send two</button>
+      <button onClick={sendThree}>Send three</button>
+      <button onClick={sendFour}>Send four</button>
+      <button onClick={sendFive}>Send five</button>
+      <button onClick={sendSix}>Send six</button>
+
     </div>
   );
 }
