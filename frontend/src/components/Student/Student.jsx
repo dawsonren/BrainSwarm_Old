@@ -6,7 +6,10 @@ export const Student = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [rollCount, setRollCount] = useState(0);
   const [sumCount, setSumCount] = useState(0);
-  const diceRef = useRef(null);  
+  const [rollValues, setRollValues] = useState([]); // [1, 2, 3, 4, 5, 6
+  console.log("Roll count: " + rollCount);
+  console.log("Sum count: " + sumCount);
+  const diceRef = useRef(null);
 
   useEffect(() => {
     // mount javascript for dice roll    
@@ -75,6 +78,11 @@ export const Student = () => {
     dice.style.animation = "rolling 4s";
 
     setTimeout(() => {
+      setRollCount(rollCount + 1);
+      const diceValue = random;
+      setSumCount(sumCount + random);
+      setRollValues([...rollValues, random]);
+
       switch (random) {
         case 1:
           dice.style.transform = "rotateX(0deg) rotateY(0deg)";
@@ -108,6 +116,26 @@ export const Student = () => {
     }, 4050);
   }
 
+  function getDiceValue() {
+    const dice = diceRef.current;
+    const currentTransform = dice.style.transform;
+    if (currentTransform === "rotateX(0deg) rotateY(0deg)") {
+      return 1;
+    } else if (currentTransform === "rotateX(-90deg) rotateY(0deg)") {
+      return 2;
+    } else if (currentTransform === "rotateX(90deg) rotateY(0deg)") {
+      return 5;
+    } else if (currentTransform === "rotateX(180deg) rotateY(0deg)") {
+      return 6;
+    } else if (currentTransform === "rotateX(0deg) rotateY(90deg)") {
+      return 3;
+    } else if (currentTransform === "rotateX(0deg) rotateY(-90deg)") {
+      return 4;
+    } else {
+      return null; // handle unknown orientation
+    }
+  }
+
   return (
     <div className="App">
       {/* Dice roll animation from: https://github.com/hosseinnabi-ir/Roll-Dice-Project-using-CSS-and-JavaScript/blob/AngularProject/css/style.css */}
@@ -122,13 +150,18 @@ export const Student = () => {
           <div className="face left"></div>
         </div>
 
-        <button className="roll" onClick={randomDice}>
+        <button className="roll" onClick={() => {
+          randomDice();          
+          }}>
           Roll Dice
         </button>
 
       </div>
 
       <p>State: {'' + isConnected}</p>
+      <p>Roll count: {rollCount}</p>
+      <p>Mean of rolls: {sumCount / rollCount}</p>
+      <p>Rolls: {rollValues.map((value) => `${value}, `)}</p>
       <button onClick={sendIncrement}>Send increment</button>
       {/* Test code - delete later */}
       <button onClick={sendOne}>Send one</button>
