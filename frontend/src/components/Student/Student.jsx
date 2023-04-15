@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { socket } from '../../socket';
+import './dice.css';
 
 export const Student = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [rollCount, setRollCount] = useState(0);
+  const [sumCount, setSumCount] = useState(0);
+  const diceRef = useRef(null);  
 
   useEffect(() => {
-    socket.connect()
+    // mount javascript for dice roll    
+
+    socket.connect();
 
     function onConnect() {
       console.log('connected to server')
@@ -29,8 +35,74 @@ export const Student = () => {
     socket.emit('sendIncrement', 1)
   }
 
+  function randomDice() {
+    const random = Math.floor(Math.random() * 10);
+
+    if (random >= 1 && random <= 6) {
+      rollDice(random);
+    } else {
+      randomDice();
+    }
+  }
+
+  function rollDice(random) {
+    const dice = diceRef.current;
+    dice.style.animation = "rolling 4s";
+
+    setTimeout(() => {
+      switch (random) {
+        case 1:
+          dice.style.transform = "rotateX(0deg) rotateY(0deg)";
+          break;
+
+        case 6:
+          dice.style.transform = "rotateX(180deg) rotateY(0deg)";
+          break;
+
+        case 2:
+          dice.style.transform = "rotateX(-90deg) rotateY(0deg)";
+          break;
+
+        case 5:
+          dice.style.transform = "rotateX(90deg) rotateY(0deg)";
+          break;
+
+        case 3:
+          dice.style.transform = "rotateX(0deg) rotateY(90deg)";
+          break;
+
+        case 4:
+          dice.style.transform = "rotateX(0deg) rotateY(-90deg)";
+          break;
+
+        default:
+          break;
+      }
+
+      dice.style.animation = "none";
+    }, 4050);
+  }
+
   return (
     <div className="App">
+      {/* Dice roll animation from: https://github.com/hosseinnabi-ir/Roll-Dice-Project-using-CSS-and-JavaScript/blob/AngularProject/css/style.css */}
+      <div className="container">
+
+        <div className="dice" ref={diceRef}>
+          <div className="face front"></div>
+          <div className="face back"></div>
+          <div className="face top"></div>
+          <div className="face bottom"></div>
+          <div className="face right"></div>
+          <div className="face left"></div>
+        </div>
+
+        <button className="roll" onClick={randomDice}>
+          Roll Dice
+        </button>
+
+      </div>
+
       <p>State: {'' + isConnected}</p>
       <button onClick={sendIncrement}>Send increment</button>
     </div>
