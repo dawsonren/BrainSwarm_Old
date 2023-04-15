@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { socket } from '../../socket';
+import HistogramChart from './Histogram';
 
 export const Teacher = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [increment, setIncrement] = useState(0)
+
+  const data = [10, 20, 30, 15, 20, 10];
+  const labels = ['1', '2', '3', '4', '5', '6'];
+  const backgroundColor = 'rgba(75, 192, 192, 0.5)';
+  const borderColor = 'rgba(75, 192, 192, 1)';
+  const borderWidth = 1;
 
   useEffect(() => {
     socket.connect()
@@ -37,6 +44,14 @@ export const Teacher = () => {
     <div className="App">
       <p>State: {'' + isConnected}</p>
       <div>{increment}</div>
+      <h1>Histogram</h1>
+      <HistogramChart 
+        data={data} 
+        labels={labels} 
+        backgroundColor={backgroundColor} 
+        borderColor={borderColor} 
+        borderWidth={borderWidth} 
+      />
     </div>
   );
 }
