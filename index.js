@@ -28,3 +28,4 @@ io.on('connection', async (socket) => {
     socket.broadcast.emit('receiveIncrement', num);
   });
 });
+server.listen()
