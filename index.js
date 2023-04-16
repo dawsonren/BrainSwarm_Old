@@ -21,25 +21,13 @@ const io = new Server(4000, {
 });
 
 io.on('connection', async (socket) => {
-  // const userId = await fetchUserId(socket);
-  // console.log(userId)
-
   // Send increment event
   socket.on('sendIncrement', (num) => {
     console.log('emitting to teacher');
+    
+    // should use rooms in the future
     socket.broadcast.emit('receiveIncrement', num);
   });
-
-  // Send roll event
-  const rollEvents = ['sendOne', 'sendTwo', 'sendThree', 'sendFour', 'sendFive', 'sendSix'];
-  const receiveEvents = ['receiveOne', 'receiveTwo', 'receiveThree', 'receiveFour', 'receiveFive', 'receiveSix']
-  for (let i = 0; i < rollEvents.length; i++) {
-    const event = rollEvents[i];
-    socket.on(event, (num) => {
-      console.log(`roll ${i + 1}`);
-      socket.broadcast.emit(receiveEvents[i], num);
-    });
-  }
 });
 
 server.listen(8080, () => {

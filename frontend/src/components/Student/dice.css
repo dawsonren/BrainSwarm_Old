@@ -1,49 +1,10 @@
-/*
-    General Styles
-*/
-
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    box-sizing: border-box;
-}
-
-body {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #b33951;
-}
-
-.container {
-    display: grid;
-    place-items: center;
-    width: 250px;
-    padding: 60px 0 40px;
-    border-radius: 30px;
-    background: #eeeeee;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
-}
-
-/*
-    Dice Styles
-*/
-
+/* Dice Styles */
 .dice {
     position: relative;
     width: 100px;
     height: 100px;
     transform-style: preserve-3d;
     transition: 1s ease;
-}
-
-@keyframes rolling {
-    50% {
-        transform: rotateX(455deg) rotateY(455deg);
-    }
 }
 
 .face {
@@ -143,24 +104,4 @@ body {
     margin: -35px 0 0 -35px;
     box-shadow: 25px 25px,
                 50px 50px;
-}
-
-/*
-    Roll Button styles
-*/
-
-.roll {
-    cursor: pointer;
-    color: #b33951;
-    margin-top: 60px;
-    padding: 6px 12px;
-    border-radius: 3px;
-    font: 700 16px 'Montserrat';
-    border: 2px solid #b33951;
-    transition: .4s;
-}
-
-.roll:hover {
-    color: #fff;
-    background: #b33951;
 }
