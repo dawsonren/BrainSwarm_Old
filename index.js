@@ -7,6 +7,8 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 
 const app = express();
+app.use(express.static(path.join(__dirname)));
+
 
 // configure cors
 app.use(cors());
@@ -28,4 +30,6 @@ io.on('connection', async (socket) => {
     socket.broadcast.emit('receiveIncrement', num);
   });
 });
-server.listen()
+server.listen(8080, () => {
+  console.log('listening on *:8080');
+});
