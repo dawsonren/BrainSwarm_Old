@@ -16,7 +16,8 @@ app.use(cors());
 const server = createServer(app);
 const io = new Server(4000, {
   cors: {
-    origin: 'http://localhost:3000',
+    // origin: 'http://localhost:3000',
+    origin: 'https://whale-app-7g3e9.ondigitalocean.app:3000',
     methods: ['GET', 'POST']
   }
 });
@@ -30,6 +31,7 @@ io.on('connection', async (socket) => {
     socket.broadcast.emit('receiveIncrement', num);
   });
 });
+
 server.listen(8080, () => {
   console.log('listening on *:8080');
 });
