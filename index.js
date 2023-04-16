@@ -7,7 +7,6 @@ const cors = require('cors');
 const { Server } = require('socket.io');
 
 const app = express();
-app.use(express.static(path.join(__dirname, '/frontend/build')));
 
 // configure cors
 app.use(cors());
@@ -28,8 +27,4 @@ io.on('connection', async (socket) => {
     // should use rooms in the future
     socket.broadcast.emit('receiveIncrement', num);
   });
-});
-
-server.listen(8080, () => {
-  console.log('Listening on http://0.0.0.0:8080');
 });
