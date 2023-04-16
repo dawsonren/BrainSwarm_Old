@@ -19,11 +19,32 @@ const io = new Server(4000, {
   }
 });
 
-io.on('connection', async (socket) => {
+const rooms = {}
+const users = []
+
+io.on('connection', (socket) => {
+  console.log("a user connected")
+  console.log('rooms', io.sockets.adapter.rooms)
+
+  socket.on('new room', (callback) => {
+    // create a randon room 
+
+    const roomID = Math.floor(Math.random() * 90000) + 10000;
+
+    // associate the socket with a room
+    // socket.join(roomID)
+
+    // add the room to the array
+    rooms[roomID] = [{ username: 'teacher', socketId: socket.id, type: 'host' }]
+
+    console.log('socketrooms', socket.rooms)
+
+    // use the callback function to respond the client with room name
+    callback({'roomID': roomID, 'users': rooms[roomID]})
+  })
+
   // Send increment event
   socket.on('sendIncrement', (num) => {
-    console.log('emitting to teacher');
-    
     // should use rooms in the future
     socket.broadcast.emit('receiveIncrement', num);
   });
